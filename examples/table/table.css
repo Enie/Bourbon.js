@@ -1,0 +1,51 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0a0a0a;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+}
+.table-wrap {
+  background: #1c1c1e;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  min-width: 420px;
+}
+.table-wrap h2 {
+  color: #fff;
+  font-size: 20px;
+  padding: 20px 24px 0;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+}
+th {
+  text-align: left;
+  padding: 10px 24px;
+  color: #888;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-bottom: 1px solid #2c2c2e;
+}
+td {
+  padding: 14px 24px;
+  color: #fff;
+  font-size: 15px;
+  border-bottom: 1px solid #2c2c2e;
+}
+tr:last-child td {
+  border-bottom: none;
+}
+tbody tr {
+  transition: background 0.15s;
+}
+tbody tr:hover {
+  background: #2c2c2e;
+}

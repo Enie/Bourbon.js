@@ -1,0 +1,55 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0a0a0a;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+}
+.counter {
+  background: #1c1c1e;
+  border-radius: 20px;
+  padding: 40px;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  min-width: 260px;
+}
+h1 {
+  color: #fff;
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+.display {
+  font-size: 72px;
+  font-weight: 200;
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 32px;
+  min-height: 86px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.controls {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+.btn {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: none;
+  font-size: 28px;
+  font-weight: 400;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: filter 0.1s;
+}
+.btn:hover { filter: brightness(1.15); }
+.btn.primary { background: #34c759; color: #fff; }
+.btn.danger { background: #ff3b30; color: #fff; }
