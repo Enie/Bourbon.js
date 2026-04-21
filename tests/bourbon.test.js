@@ -180,6 +180,58 @@ describe('head', () => {
   });
 });
 
+// ── function-interpolation guard ─────────────────────────────────────────────
+
+describe('function-interpolation guard', () => {
+  test('node throws when an interpolation returns a function', () => {
+    const { node, mount } = createEnv();
+    const factoryOfFactory = () => () => 'oops';
+    assert.throws(
+      () => mount(node`<div>${factoryOfFactory}</div>`),
+      /forget to invoke a factory/
+    );
+  });
+
+  test('node throws on the realistic footgun: forgetting to invoke watch inside a wrapper', () => {
+    const { node, watch, mount } = createEnv();
+    const Wrapped = () => watch({ x: 1 })`<span>${s => s.x}</span>`;
+    assert.throws(
+      () => mount(node`<div>${Wrapped}</div>`),
+      /forget to invoke a factory/
+    );
+  });
+
+  test('node does not throw for a factory that returns an HTMLElement', () => {
+    const { node, mount } = createEnv();
+    const Badge = node`<span class="ok">ok</span>`;
+    assert.doesNotThrow(() => mount(node`<div>${() => Badge()}</div>`));
+  });
+
+  test('node does not throw for primitive interpolations', () => {
+    const { node, mount } = createEnv();
+    assert.doesNotThrow(() => mount(node`<span>${() => 'text'}</span>`));
+    assert.doesNotThrow(() => mount(node`<span>${() => 42}</span>`));
+  });
+
+  test('head throws when an interpolation returns a function', () => {
+    const { head } = createEnv();
+    const factoryOfFactory = () => () => '<meta>';
+    assert.throws(
+      () => head`${factoryOfFactory}`,
+      /forget to invoke a factory/
+    );
+  });
+
+  test('head accepts a function that returns a string', () => {
+    const { win, head } = createEnv();
+    assert.doesNotThrow(() =>
+      head`<meta name="bourbon-guard" content="${() => 'ok'}">`
+    );
+    const el = win.document.head.querySelector('meta[name="bourbon-guard"]');
+    assert.equal(el.getAttribute('content'), 'ok');
+  });
+});
+
 // ── known bugs ────────────────────────────────────────────────────────────────
 
 describe('known bugs', () => {

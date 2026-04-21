@@ -97,6 +97,7 @@ const node = (strings, ...values) => (state, setState) => {
       html += `<template node-id="${id}"></template>` + si1;
       deferredNodes.push({id, node: v});
     } else {
+      if (typeof v === 'function') throw new Error('Interpolation returned a function — did you forget to invoke a factory?');
       html += v + si1;
     }
   });
@@ -130,7 +131,9 @@ const head = (strings, ...values) => {
   let html = strings[0] || '';
   const boundValues = bind(values, undefined, undefined);
   boundValues.forEach((value, i) => {
-    html += (typeof value === 'function' ? value() : value) + (strings[i + 1] || '');
+    const v = typeof value === 'function' ? value() : value;
+    if (typeof v === 'function') throw new Error('Interpolation returned a function — did you forget to invoke a factory?');
+    html += v + (strings[i + 1] || '');
   });
   document.head.insertAdjacentHTML('beforeend', html.trim());
 };
